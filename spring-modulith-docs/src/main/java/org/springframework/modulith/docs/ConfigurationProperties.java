@@ -116,7 +116,7 @@ class ConfigurationProperties implements Iterable<ConfigurationProperty> {
 					.map(it -> (Map<String, Object>) it)
 					.flatMap(ConfigurationProperty::of);
 
-		} catch (Exception o_O) {
+		} catch (Exception oO) {
 			return Stream.empty();
 		}
 	}

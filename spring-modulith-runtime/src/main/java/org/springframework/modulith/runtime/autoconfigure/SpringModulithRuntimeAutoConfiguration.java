@@ -163,8 +163,8 @@ class SpringModulithRuntimeAutoConfiguration {
 		return () -> {
 			try {
 				return modules.get();
-			} catch (Exception o_O) {
-				throw new RuntimeException(o_O);
+			} catch (Exception oO) {
+				throw new RuntimeException(oO);
 			}
 		};
 	}

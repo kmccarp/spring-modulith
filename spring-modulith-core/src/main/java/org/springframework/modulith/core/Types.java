@@ -66,7 +66,7 @@ class Types {
 				return isPresent()
 						? (Class<? extends Annotation>) ClassUtils.forName(MODULE, JMoleculesTypes.class.getClassLoader())
 						: null;
-			} catch (Exception o_O) {
+			} catch (Exception oO) {
 				return null;
 			}
 		}

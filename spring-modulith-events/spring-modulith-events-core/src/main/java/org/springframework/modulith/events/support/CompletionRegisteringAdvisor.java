@@ -168,13 +168,13 @@ public class CompletionRegisteringAdvisor extends AbstractPointcutAdvisor {
 
 			try {
 				result = invocation.proceed();
-			} catch (Exception o_O) {
+			} catch (Exception oO) {
 
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Invocation of listener {} failed. Leaving event publication uncompleted.", method, o_O);
+					LOG.debug("Invocation of listener {} failed. Leaving event publication uncompleted.", method, oO);
 				} else {
 					LOG.info("Invocation of listener {} failed with message {}. Leaving event publication uncompleted.",
-							method, o_O.getMessage());
+							method, oO.getMessage());
 				}
 
 				return result;

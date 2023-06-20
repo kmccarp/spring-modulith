@@ -39,7 +39,7 @@ import org.springframework.util.Assert;
  */
 class JpaEventPublicationRepository implements EventPublicationRepository {
 
-	private static String BY_EVENT_AND_LISTENER_ID = """
+	private static final String BY_EVENT_AND_LISTENER_ID = """
 			select p
 			from JpaEventPublication p
 				where
@@ -48,7 +48,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 					and p.completionDate is null
 			""";
 
-	private static String INCOMPLETE = """
+	private static final String INCOMPLETE = """
 			select p
 			from JpaEventPublication p
 			where

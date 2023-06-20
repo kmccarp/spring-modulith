@@ -530,8 +530,8 @@ public class ApplicationModules implements Iterable<ApplicationModule> {
 		public static DescribedPredicate<JavaClass> withoutModules(String... names) {
 
 			return Arrays.stream(names) //
-					.map(it -> withoutModule(it)) //
-					.reduce(DescribedPredicate.alwaysFalse(), (left, right) -> left.or(right), (__, right) -> right);
+					.map(ApplicationModules.Filters::withoutModule) //
+					.reduce(DescribedPredicate.alwaysFalse(), DescribedPredicate::or, (__, right) -> right);
 		}
 
 		public static DescribedPredicate<JavaClass> withoutModule(String name) {
@@ -725,7 +725,7 @@ public class ApplicationModules implements Iterable<ApplicationModule> {
 				iterator.forEachRemaining(it -> names.add(0, it.getName()));
 				return names;
 
-			} catch (IllegalArgumentException o_O) {
+			} catch (IllegalArgumentException oO) {
 				return modules.modules.values().stream().map(ApplicationModule::getName).toList();
 			}
 		}

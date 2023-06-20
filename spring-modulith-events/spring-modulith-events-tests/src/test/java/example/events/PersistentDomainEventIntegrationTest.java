@@ -150,7 +150,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class NonTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@EventListener
 		void on(DomainEvent event) {
@@ -160,7 +160,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class FirstTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -170,7 +170,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class SecondTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -181,7 +181,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class ThirdTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -191,7 +191,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class FourthTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@Async
 		@TransactionalEventListener
