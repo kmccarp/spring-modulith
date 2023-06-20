@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 the original author or authors.
+ * Copyright 2018-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.acme.myproject.moduleD;
+package com.acme.myproject.modulea;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import com.acme.myproject.moduleC.SomeValueC;
+import org.jmolecules.event.annotation.DomainEvent;
 
 /**
  * @author Oliver Drotbohm
  */
-@ConfigurationProperties
-class ConfigurationPropertiesD {
-
-	final SomeValueC value;
-
-	ConfigurationPropertiesD(SomeValueC value) {
-		this.value = value;
-	}
-}
+@DomainEvent
+public record SomeEventA(String message) {}

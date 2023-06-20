@@ -13,14 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.acme.myproject.moduleB.internal;
+package com.acme.myproject.modulea;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Oliver Drotbohm
  */
 @Component
-public class InternalComponentB {
+public class ServiceComponentA {
 
+	private final ApplicationEventPublisher publisher;
+
+	ServiceComponentA(ApplicationEventPublisher publisher) {
+		this.publisher = publisher;
+	}
+
+	public void fireEvent() {
+		publisher.publishEvent(new SomeEventA("Message"));
+	}
 }

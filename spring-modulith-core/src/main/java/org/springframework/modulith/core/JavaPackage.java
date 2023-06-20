@@ -43,7 +43,7 @@ import com.tngtech.archunit.thirdparty.com.google.common.base.Suppliers;
  *
  * @author Oliver Drotbohm
  */
-public class JavaPackage implements DescribedIterable<JavaClass> {
+public final class JavaPackage implements DescribedIterable<JavaClass> {
 
 	private static final String PACKAGE_INFO_NAME = "package-info";
 
@@ -68,9 +68,9 @@ public class JavaPackage implements DescribedIterable<JavaClass> {
 		this.packageClasses = classes.that(resideInAPackage(includeSubPackages ? name.concat("..") : name));
 		this.name = name;
 		this.directSubPackages = Suppliers.memoize(() -> packageClasses.stream() //
-				.map(it -> it.getPackageName()) //
+				.map(JavaClass::getPackageName) //
 				.filter(it -> !it.equals(name)) //
-				.map(it -> extractDirectSubPackage(it)) //
+				.map(this::extractDirectSubPackage) //
 				.distinct() //
 				.map(it -> of(classes, it)) //
 				.collect(Collectors.toSet()));
@@ -231,7 +231,7 @@ public class JavaPackage implements DescribedIterable<JavaClass> {
 		return packageClasses.that(JavaClass.Predicates.simpleName(PACKAGE_INFO_NAME) //
 				.and(CanBeAnnotated.Predicates.annotatedWith(annotationType))) //
 				.toOptional() //
-				.map(it -> it.reflect())
+				.map(JavaClass::reflect)
 				.map(it -> AnnotatedElementUtils.getMergedAnnotation(it, annotationType));
 	}
 
@@ -260,11 +260,7 @@ public class JavaPackage implements DescribedIterable<JavaClass> {
 	@Override
 	public String toString() {
 
-		return new StringBuilder(name) //
-				.append("\n") //
-				.append(getClasses().format(name)) //
-				.append('\n') //
-				.toString();
+		return name + "\n" + getClasses().format(name) + '\n';
 	}
 
 	/*

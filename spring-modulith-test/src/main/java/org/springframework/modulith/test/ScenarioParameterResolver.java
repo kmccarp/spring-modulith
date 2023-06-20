@@ -85,8 +85,8 @@ class ScenarioParameterResolver implements ParameterResolver, AfterEachCallback 
 
 		try {
 			return context.getBean(TransactionTemplate.class);
-		} catch (NoSuchBeanDefinitionException o_O) {
-			throw new ParameterResolutionException(MISSING_TRANSACTION_TEMPLATE, o_O);
+		} catch (NoSuchBeanDefinitionException oO) {
+			throw new ParameterResolutionException(MISSING_TRANSACTION_TEMPLATE, oO);
 		}
 	}
 }

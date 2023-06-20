@@ -58,8 +58,8 @@ class ApplicationIntegrationTests {
 	@Test
 	void bootstrapsApplication(Scenario scenario) throws Exception {
 
-		scenario.stimulate(() -> orders.complete())
-				.andWaitForStateChange(() -> registry.findIncompletePublications(), Collection::isEmpty)
+		scenario.stimulate(orders::complete)
+				.andWaitForStateChange(registry::findIncompletePublications, Collection::isEmpty)
 				.andExpect(InventoryUpdated.class)
 				.toArrive();
 	}
