@@ -242,7 +242,7 @@ public abstract class Location {
 		}
 	}
 
-	private static class JarFileLocation extends Location {
+	private static final class JarFileLocation extends Location {
 		private static final String SCHEME = "jar";
 
 		private JarFileLocation(NormalizedUri uri) {
@@ -329,7 +329,7 @@ public abstract class Location {
 		}
 	}
 
-	private static class FilePathLocation extends Location {
+	private static final class FilePathLocation extends Location {
 		private static final String SCHEME = "file";
 
 		private FilePathLocation(NormalizedUri uri) {

@@ -68,7 +68,7 @@ class DocumenterTest {
 	void testName() {
 
 		documenter.getModules().stream() //
-				.map(it -> documenter.toModuleCanvas(it));
+				.map(documenter::toModuleCanvas);
 	}
 
 	@Test

@@ -167,9 +167,7 @@ public class Scenario {
 	 * @return will never be {@literal null}.
 	 */
 	public <S> When<S> stimulate(Function<TransactionOperations, S> function) {
-		return stimulate((tx, __) -> {
-			return function.apply(tx);
-		});
+		return stimulate((tx, __) -> function.apply(tx));
 	}
 
 	/**
@@ -293,7 +291,7 @@ public class Scenario {
 
 			Assert.notNull(customizer, "Customizer must not be null!");
 
-			return new When<T>(stimulus, cleanup, defaultCustomizer.andThen(customizer));
+			return new When<>(stimulus, cleanup, defaultCustomizer.andThen(customizer));
 		}
 
 		// Expect event
@@ -348,7 +346,7 @@ public class Scenario {
 		 * @see #forEventOfType(Class)
 		 */
 		public <E> EventResult<E> andWaitForEventOfType(Class<E> type) {
-			return new EventResult<E>(type, Function.identity(), null);
+			return new EventResult<>(type, Function.identity(), null);
 		}
 
 		/**
@@ -382,7 +380,7 @@ public class Scenario {
 			Assert.notNull(supplier, "Supplier must not be null!");
 			Assert.notNull(acceptanceCriteria, "Acceptance criteria must not be null!");
 
-			return new StateChangeResult<>(awaitInternal(__ -> {}, () -> supplier.get(), acceptanceCriteria));
+			return new StateChangeResult<>(awaitInternal(__ -> {}, supplier::get, acceptanceCriteria));
 		}
 
 		private <S> ExecutionResult<S, T> awaitInternal(Consumer<T> verifications, Callable<S> supplier,
@@ -508,7 +506,7 @@ public class Scenario {
 
 				Assert.notNull(filter, "Filter must not be null!");
 
-				return new EventResult<E>(type, createOrAdd(it -> it.matching(filter)), previousResult);
+				return new EventResult<>(type, createOrAdd(it -> it.matching(filter)), previousResult);
 			}
 
 			/**
@@ -521,7 +519,7 @@ public class Scenario {
 			 * @return will never be {@literal null}.
 			 */
 			public <S> EventResult<E> matchingMapped(Function<E, S> extractor, Predicate<? super S> filter) {
-				return new EventResult<E>(type, createOrAdd(it -> it.matching(extractor, filter)), previousResult);
+				return new EventResult<>(type, createOrAdd(it -> it.matching(extractor, filter)), previousResult);
 			}
 
 			/**
@@ -533,7 +531,7 @@ public class Scenario {
 			 * @return will never be {@literal null}.
 			 */
 			public <S> EventResult<E> matchingMappedValue(Function<E, S> extractor, @Nullable S value) {
-				return new EventResult<E>(type, createOrAdd(it -> it.matching(extractor, value)), previousResult);
+				return new EventResult<>(type, createOrAdd(it -> it.matching(extractor, value)), previousResult);
 			}
 
 			/**
@@ -626,7 +624,7 @@ public class Scenario {
 					verifications.accept(previousResult.second());
 
 				} else {
-					awaitInternal(verifications, () -> getFilteredEvents(), it -> it.eventOfTypeWasPublished(type));
+					awaitInternal(verifications, this::getFilteredEvents, it -> it.eventOfTypeWasPublished(type));
 				}
 			}
 		}

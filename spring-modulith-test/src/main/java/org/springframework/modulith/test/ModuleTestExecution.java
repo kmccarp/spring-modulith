@@ -39,12 +39,12 @@ import com.tngtech.archunit.thirdparty.com.google.common.base.Suppliers;
 /**
  * @author Oliver Drotbohm
  */
-public class ModuleTestExecution implements Iterable<ApplicationModule> {
+public final class ModuleTestExecution implements Iterable<ApplicationModule> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModuleTestExecution.class);
 
-	private static Map<Class<?>, Class<?>> MODULITH_TYPES = new HashMap<>();
-	private static Map<Key, ModuleTestExecution> EXECUTIONS = new HashMap<>();
+	private static final Map<Class<?>, Class<?>> MODULITH_TYPES = new HashMap<>();
+	private static final Map<Key, ModuleTestExecution> EXECUTIONS = new HashMap<>();
 
 	private final Key key;
 
@@ -68,7 +68,7 @@ public class ModuleTestExecution implements Iterable<ApplicationModule> {
 		this.basePackages = Suppliers.memoize(() -> {
 
 			var moduleBasePackages = module.getBootstrapBasePackages(modules, bootstrapMode.getDepth());
-			var sharedBasePackages = modules.getSharedModules().stream().map(it -> it.getBasePackage());
+			var sharedBasePackages = modules.getSharedModules().stream().map(ApplicationModule::getBasePackage);
 			var extraPackages = extraIncludes.stream().map(ApplicationModule::getBasePackage);
 
 			var intermediate = Stream.concat(moduleBasePackages, extraPackages);

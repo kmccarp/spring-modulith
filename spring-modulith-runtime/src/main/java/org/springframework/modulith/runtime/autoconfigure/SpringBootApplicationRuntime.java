@@ -113,6 +113,6 @@ class SpringBootApplicationRuntime implements ApplicationRuntime {
 		}
 
 		return fqn.startsWith(applicationClass.getPackage().getName())
-				|| AutoConfigurationPackages.get(context).stream().anyMatch(pkg -> fqn.startsWith(pkg));
+				|| AutoConfigurationPackages.get(context).stream().anyMatch(fqn::startsWith);
 	}
 }

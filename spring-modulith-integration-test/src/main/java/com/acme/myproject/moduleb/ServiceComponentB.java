@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.acme.myproject.moduleA;
+package com.acme.myproject.moduleb;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+import com.acme.myproject.moduleA.ServiceComponentA;
+import com.acme.myproject.moduleb.internal.InternalComponentB;
 
 /**
  * @author Oliver Drotbohm
  */
-@Configuration
-public class SomeConfigurationA {
+@Component
+public class ServiceComponentB {
 
-	@Bean
-	SomeAtBeanComponentA atBeanComponent() {
-		return null;
+	final ServiceComponentA serviceComponentA;
+	final InternalComponentB internalComponentB;
+
+	ServiceComponentB(ServiceComponentA serviceComponentA, InternalComponentB internalComponentB) {
+		this.serviceComponentA = serviceComponentA;
+		this.internalComponentB = internalComponentB;
 	}
-
-	public static class SomeAtBeanComponentA {}
 }
