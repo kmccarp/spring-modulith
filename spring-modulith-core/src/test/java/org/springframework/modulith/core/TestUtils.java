@@ -35,13 +35,13 @@ import com.tngtech.archunit.thirdparty.com.google.common.base.Suppliers;
  */
 class TestUtils {
 
-	private static Supplier<JavaClasses> imported = Suppliers.memoize(() -> new ClassFileImporter() //
-			.importPackagesOf(ApplicationModules.class, Repository.class, AggregateRoot.class));
+	private static final Supplier<JavaClasses> imported = Suppliers.memoize(() -> new ClassFileImporter() //
+.importPackagesOf(ApplicationModules.class, Repository.class, AggregateRoot.class));
 
-	private static DescribedPredicate<JavaClass> IS_MODULE_TYPE = JavaClass.Predicates
-			.resideInAPackage(ApplicationModules.class.getPackage().getName());
+	private static final DescribedPredicate<JavaClass> IS_MODULE_TYPE = JavaClass.Predicates
+.resideInAPackage(ApplicationModules.class.getPackage().getName());
 
-	private static Supplier<Classes> classes = Suppliers.memoize(() -> Classes.of(imported.get()).that(IS_MODULE_TYPE));
+	private static final Supplier<Classes> classes = Suppliers.memoize(() -> Classes.of(imported.get()).that(IS_MODULE_TYPE));
 
 	/**
 	 * Returns all {@link Classes} of this module.
