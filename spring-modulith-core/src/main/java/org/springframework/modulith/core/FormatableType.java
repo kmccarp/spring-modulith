@@ -35,7 +35,7 @@ import com.tngtech.archunit.thirdparty.com.google.common.base.Suppliers;
  *
  * @author Oliver Drotbohm
  */
-public class FormatableType {
+public final class FormatableType {
 
 	private static final Map<String, FormatableType> CACHE = new ConcurrentHashMap<>();
 

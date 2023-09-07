@@ -136,7 +136,7 @@ public interface EventPublication extends Comparable<EventPublication>, Completa
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public default int compareTo(EventPublication that) {
+	default public int compareTo(EventPublication that) {
 		return this.getPublicationDate().compareTo(that.getPublicationDate());
 	}
 }

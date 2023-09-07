@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.acme.myproject.moduleA;
+package com.acme.myproject.modulea;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -51,7 +51,7 @@ class ModuleATest {
 		context.getBean(ServiceComponentA.class).fireEvent();
 
 		TypedPublishedEvents<SomeEventA> matching = events.ofType(SomeEventA.class) //
-				.matching(it -> it.message().equals("Message"));
+				.matching(it -> "Message".equals(it.message()));
 
 		assertThat(matching).hasSize(1);
 	}

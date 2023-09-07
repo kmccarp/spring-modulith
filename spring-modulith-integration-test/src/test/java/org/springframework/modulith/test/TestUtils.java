@@ -69,7 +69,7 @@ public class TestUtils {
 		});
 	}
 
-	private static RuntimeException asRuntimeException(Throwable o_O) {
-		return o_O instanceof RuntimeException ? (RuntimeException) o_O : new RuntimeException(o_O);
+	private static RuntimeException asRuntimeException(Throwable oO) {
+		return oO instanceof RuntimeException ? (RuntimeException) oO : new RuntimeException(oO);
 	}
 }

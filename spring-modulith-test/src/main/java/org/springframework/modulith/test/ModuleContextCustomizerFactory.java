@@ -50,7 +50,7 @@ class ModuleContextCustomizerFactory implements ContextCustomizerFactory {
 		return moduleTest == null ? null : new ModuleContextCustomizer(moduleTest.getRootDeclaringClass());
 	}
 
-	static class ModuleContextCustomizer implements ContextCustomizer {
+	static final class ModuleContextCustomizer implements ContextCustomizer {
 
 		private static final Logger LOGGER = LoggerFactory.getLogger(ModuleContextCustomizer.class);
 		private static final String BEAN_NAME = ModuleTestExecution.class.getName();

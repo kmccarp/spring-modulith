@@ -29,7 +29,7 @@ public interface AssertablePublishedEvents extends PublishedEvents, AssertProvid
 	 * @see org.assertj.core.api.AssertProvider#assertThat()
 	 */
 	@Override
-	public default PublishedEventsAssert assertThat() {
+	default public PublishedEventsAssert assertThat() {
 		return new PublishedEventsAssert(this);
 	}
 }
