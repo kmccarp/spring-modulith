@@ -103,7 +103,7 @@ public class ModuleTracingBeanPostProcessor extends ModuleTracingSupport impleme
 		});
 	}
 
-	private static class ObservableTypeMethodMatcher extends StaticMethodMatcher {
+	private static final class ObservableTypeMethodMatcher extends StaticMethodMatcher {
 
 		private final ObservedModuleType type;
 

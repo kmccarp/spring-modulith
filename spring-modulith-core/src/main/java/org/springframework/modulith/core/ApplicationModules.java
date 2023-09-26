@@ -531,7 +531,7 @@ public class ApplicationModules implements Iterable<ApplicationModule> {
 		public static DescribedPredicate<JavaClass> withoutModules(String... names) {
 
 			return Arrays.stream(names) //
-					.map(it -> withoutModule(it)) //
+					.map(org.springframework.modulith.core.ApplicationModules.Filters::withoutModule) //
 					.reduce(DescribedPredicate.alwaysFalse(), (left, right) -> left.or(right), (__, right) -> right);
 		}
 
