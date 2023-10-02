@@ -93,7 +93,7 @@ public class ApplicationModule {
 		this.aggregateRoots = Suppliers.memoize(() -> findAggregateRoots(basePackage));
 		this.valueTypes = Suppliers
 				.memoize(() -> findArchitecturallyEvidentType(ArchitecturallyEvidentType::isValueObject));
-		this.publishedEvents = Suppliers.memoize(() -> findPublishedEvents());
+		this.publishedEvents = Suppliers.memoize(this::findPublishedEvents);
 	}
 
 	/**
@@ -503,7 +503,7 @@ public class ApplicationModule {
 
 		return beans.stream() //
 				.map(it -> ArchitecturallyEvidentType.of(it, beans)) //
-				.flatMap(it -> QualifiedDependency.fromType(it)) //
+				.flatMap(org.springframework.modulith.core.ApplicationModule.QualifiedDependency::fromType) //
 				.filter(it -> isDependencyToOtherModule(it.target, modules)) //
 				.filter(it -> it.hasType(DependencyType.USES_COMPONENT)) //
 				.map(it -> modules.getModuleByType(it.target)) //
@@ -572,7 +572,7 @@ public class ApplicationModule {
 				.toList();
 	}
 
-	static class DeclaredDependency {
+	static final class DeclaredDependency {
 
 		private static final String INVALID_EXPLICIT_MODULE_DEPENDENCY = "Invalid explicit module dependency in %s! No module found with name '%s'.";
 		private static final String INVALID_NAMED_INTERFACE_DECLARATION = "No named interface named '%s' found! Original dependency declaration: %s -> %s.";
@@ -712,7 +712,7 @@ public class ApplicationModule {
 	 *
 	 * @author Oliver Drotbohm
 	 */
-	static class DeclaredDependencies {
+	static final class DeclaredDependencies {
 
 		private static final String OPEN_TOKEN = "¯\\_(ツ)_/¯";
 
@@ -821,7 +821,8 @@ public class ApplicationModule {
 
 		private static final List<String> INJECTION_TYPES = Arrays.asList(AT_AUTOWIRED, AT_RESOURCE, AT_INJECT);
 
-		private final JavaClass source, target;
+		private final JavaClass source;
+		private final JavaClass target;
 		private final String description;
 		private final DependencyType type;
 
@@ -1002,12 +1003,10 @@ public class ApplicationModule {
 			return constructors.stream() //
 					.filter(it -> constructors.size() == 1 || isInjectionPoint(it)) //
 					.flatMap(it -> it.getRawParameterTypes().stream() //
-							.map(parameter -> {
-								return source.isInjectable() && !source.isConfigurationProperties()
+							.map(parameter -> source.isInjectable() && !source.isConfigurationProperties()
 										? new InjectionDependency(it, parameter)
 										: new QualifiedDependency(type, parameter, createDescription(it, parameter, "parameter"),
-												DependencyType.DEFAULT);
-							}));
+												DependencyType.DEFAULT)));
 		}
 
 		private static Stream<QualifiedDependency> fromFieldsOf(JavaClass source) {
@@ -1030,7 +1029,7 @@ public class ApplicationModule {
 			var returnTypes = methods.stream() //
 					.filter(it -> !it.getRawReturnType().isPrimitive()) //
 					.filter(it -> !it.getRawReturnType().getPackageName().startsWith("java")) //
-					.map(it -> fromCodeUnitReturnType(it));
+					.map(org.springframework.modulith.core.ApplicationModule.QualifiedDependency::fromCodeUnitReturnType);
 
 			var injectionMethods = methods.stream() //
 					.filter(QualifiedDependency::isInjectionPoint) //
@@ -1140,7 +1139,7 @@ public class ApplicationModule {
 		}
 	}
 
-	private static class DefaultApplicationModuleDependency implements ApplicationModuleDependency {
+	private static final class DefaultApplicationModuleDependency implements ApplicationModuleDependency {
 
 		private final QualifiedDependency dependency;
 		private final ApplicationModule target;
